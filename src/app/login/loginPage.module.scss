@@ -1,0 +1,48 @@
+.wrapper {
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	margin-top: 60px;
+
+	.container {
+		display: grid;
+		gap: 50px;
+		background-color: var(--softBg);
+		padding: 150px 200px;
+		border-radius: 10px;
+
+		@media screen and (max-width: 768px) {
+			padding: 50px 100px;
+		}
+
+		@media screen and (max-width: 640px) {
+			padding: 30px;
+		}
+
+
+		.socialButton {
+			justify-content: center;
+			align-items: center;
+			padding: 20px;
+			border-radius: 5px;
+			border: none;
+			color: white;
+			font-weight: 700;
+			cursor: pointer;
+
+			@media screen and (max-width: 640px) {
+				font-weight: 400;
+				font-size: 14px;
+			}
+		}
+
+		.googleButton {
+			background-color: #ff5555;
+		}
+
+		.githubButton {
+			background-color: #111;
+		}
+
+	}
+}

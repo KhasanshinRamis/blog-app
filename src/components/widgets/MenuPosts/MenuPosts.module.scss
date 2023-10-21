@@ -1,0 +1,87 @@
+.items {
+	display: grid;
+	grid-auto-flow: row;
+	gap: 35px;
+	margin: 35px auto 60px;
+
+	.item {
+		display: grid;
+		align-items: center;
+		gap: 20px;
+	}
+
+	.itemWithImage {
+		grid-template-columns: 1fr 4fr;
+
+		@media screen and (max-width: 1280px) {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.imageContainer {
+		position: relative;
+		aspect-ratio: 1/1;
+
+		@media screen and (max-width: 1280px) {
+			display: none;
+		}
+
+		.image {
+			border-radius: 50%;
+			border: 3px solid lightgray;
+			object-fit: cover;
+		}
+	}
+
+	.textContainer {
+		display: grid;
+		gap: 5px;
+
+		.category {
+			padding: 3px 8px;
+			border-radius: 10px;
+			font-size: 12px;
+			color: white;
+			width: max-content;
+		}
+
+		.travel {
+			background-color: #ff7857;
+		}
+
+		.culture {
+			background-color: #ffb14f;
+		}
+
+		.food {
+			background-color: #7fb881;
+		}
+
+		.fashion {
+			background-color: #ff7887;
+		}
+
+		.coding {
+			background-color: #775aec;
+		}
+
+		.style {
+			background-color: #789cff;
+		}
+		
+		.postTitle {
+			font-size: 18px;
+			font-weight: 500;
+			color: var(--softTextColor);
+		}
+
+		.detail {
+			font-size: 12px;
+
+			.date {
+
+				color: gray;
+			}
+		}
+	}
+}

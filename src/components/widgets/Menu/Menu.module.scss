@@ -1,0 +1,22 @@
+.container {
+	margin-top: 50px;
+
+	@media screen and (max-width: 1024px) {
+		display: none;
+	}
+	.subtitle {
+		color: gray;
+		font-size: 16px;
+		font-weight: 400;
+	}
+
+	.title {
+		font-size: 28px;
+	}
+
+	
+
+	.categoryList {
+		margin-bottom: 60px;
+	}
+}

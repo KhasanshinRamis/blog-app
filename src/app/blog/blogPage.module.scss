@@ -1,0 +1,19 @@
+.container {
+	.title {
+		border: 3px solid #789cff;
+		border-radius: 10px;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+
+	.content {
+		display: grid;
+		grid-template-columns: 5fr 2fr;
+		gap: 50px;
+
+		@media screen and (max-width: 1024px) {
+			grid-template-columns: 1fr;
+		}
+	}
+}

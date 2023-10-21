@@ -1,0 +1,89 @@
+.container {
+
+	.infoContainer {
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 20px;
+		align-items: center;
+
+		@media screen and (max-width: 1024px) {
+			grid-template-columns: 1fr;
+		}
+
+		.textContainer {
+
+			.title {
+				font-size: 36px;
+				margin-bottom: 50px;
+
+				@media screen and (max-width: 1024px) {
+					margin-bottom: 25px;
+				}
+			}
+
+			.user {
+				display: grid;
+				grid-auto-flow: column;
+				grid-template-columns: 50px 1fr;
+				gap: 20px;
+				align-items: center;
+
+				.userImageContainer {
+					position: relative;
+					height: 50px;
+					width: 50px;
+
+					.avatar {
+						border-radius: 50%;
+						object-fit: cover;
+					}
+				}
+
+				.userTextContainer {
+					display: grid;
+					gap: 5px;
+					color: var(--softTextColor);
+
+					.username {
+						font-size: 20px;
+						font-weight: 500;
+					}
+				}
+			}
+		}
+
+		.imageContainer {
+			position: relative;
+			height: 350px;
+
+			.image {
+				object-fit: cover;
+			}
+		}
+	}
+
+	.content {
+		display: grid;
+		grid-auto-flow: column;
+		grid-template-columns: 5fr 2fr;
+		gap: 50px;
+		
+		@media screen and (max-width: 1024px) {
+			grid-template-columns: 1fr;
+		}
+
+		.post {
+			margin-top: 60px;
+			
+			.description {
+
+				.text {
+					margin-bottom: 20px;
+					font-size: 20px;
+					font-weight: 300;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,28 @@
+.container {
+	.auth {
+
+		display: grid;
+		gap: 20px;
+		grid-auto-flow: column;
+	
+		.link {
+			cursor: pointer;
+		}
+	
+		@media screen and (max-width: 640px) {
+			gap: 8px;
+		}
+	}
+
+	.link {
+		@media screen and (max-width: 640px) {
+			display: none;
+		}
+	}
+	.isBurger {
+		display: grid;
+	}
+}
+
+
+
