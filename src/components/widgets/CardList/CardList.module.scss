@@ -2,4 +2,55 @@
 	.title {
 		margin: 50px 0;
 	}
+	// .Card {
+	// 	margin-bottom: 50px;
+	// 	display: grid;
+	// 	grid-template-columns: 1fr 1fr;
+	// 	align-items: center;
+	// 	gap: 50px;
+	
+	// 	@media screen and (max-width: 1024px) {
+	// 		grid-template-columns: 1fr;
+	// 	}
+	
+	// 	.imageContainer {
+	// 		height: 350px;
+	// 		position: relative;
+			
+	// 		// @media screen and (max-width: 1280px) {
+	// 		// 	display: none;
+	// 		// }
+	// 		.image {
+	// 			object-fit: cover;
+	// 		}
+	// 	}
+	
+	// 	.textContainer {
+	// 		display: grid;
+	// 		gap: 20px;
+			
+	// 		.details {
+	// 			.date {
+	// 				color: gray;
+	// 			}
+	
+	// 			.category {
+	// 				color: crimson;
+	// 				font-weight: 500;
+	// 			}
+	// 		}
+	
+	// 		.description {
+	// 			font-size: 18px;
+	// 			font-weight: 300;
+	// 			color: var(--softTextColor);
+	// 		}
+	
+	// 		.link {
+	// 			border-bottom: 1px solid crimson;
+	// 			width: max-content;
+	// 			padding: 2px 0;
+	// 		}
+	// 	}
+	// }
 }

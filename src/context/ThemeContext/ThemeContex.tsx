@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useEffect, useState } from 'react';
+import { PropsWithChildren, createContext, useEffect, useState } from 'react';
 
 export const ThemeContex = createContext();
 
@@ -12,7 +12,7 @@ const getFromLocalStorage = () => {
 
 };
 
-export const ThemeContextProvider = ({children}) => {
+export const ThemeContextProvider = ({children}: PropsWithChildren) => {
 	const [ theme, setTheme] = useState(() => {
 		return getFromLocalStorage();
 	});

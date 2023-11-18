@@ -7,11 +7,26 @@ import cn from 'classnames';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import { Container } from '@/components';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function WritePage() {
 
+	const { status } = useSession();
+	const router = useRouter();
+
+
 	const [ isOpened, setIsOpened ] = useState<boolean>(false);
 	const [ value, setValue ] = useState<string>('');
+
+
+	if (status === 'loading') {
+		return <div className={styles.loading}>Loading...</div>;	
+	}
+
+	if (status === 'unauthenticated') {
+		router.push('/');
+	}	
 
 	return (
 		<Container className={styles.container}>

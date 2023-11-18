@@ -1,52 +1,32 @@
+'use client';
+
 import Link from 'next/link';
 import styles from './MenuCategories.module.scss';
 import { MenuCategoriesProps } from './MenuCategories.props';
 import cn from 'classnames';
+import { useCategories } from '@/store/useCategories';
+import { useEffect } from 'react';
+import { ICategory } from '@/interfaces/categories.interface';
 
 export const MenuCategories = ({ ...props }: MenuCategoriesProps):JSX.Element => {
+	
+	const [ categories, getAllCategories ] =useCategories((state) => [state.categories, state.getAllCategories]);
+
+	useEffect(() => {
+		getAllCategories();
+	}, [getAllCategories()]);
+	
 	return (
 		<div className={styles.categoryList} {...props}>
-			<Link
-				href='/blog?cat=style'
-				className={cn(styles.categoryItem, styles.style)}
-			>
-				Style
-			</Link>
-		
-			<Link
-				href='/blog?cat=travel'
-				className={cn(styles.categoryItem, styles.travel)}
-			>
-				Travel
-			</Link>
-
-			<Link
-				href='/blog?cat=culture'
-				className={cn(styles.categoryItem, styles.culture)}
-			>
-				Culture
-			</Link>
-
-			<Link
-				href='/blog?cat=food'
-				className={cn(styles.categoryItem, styles.food)}
-			>
-				Food
-			</Link>
-
-			<Link
-				href='/blog?cat=fashion'
-				className={cn(styles.categoryItem, styles.fashion)}
-			>
-				Fashion
-			</Link>
-
-			<Link
-				href='/blog?cat=coding'
-				className={cn(styles.categoryItem, styles.coding)}
-			>
-				Coding
-			</Link>
+			{categories && categories.map((category: ICategory) => (
+				<Link
+				key={category._id}
+					href={`/blog?cat=${category.title}`}
+					className={cn(styles.categoryItem, styles[category.title])}
+				>
+					{category.title}
+				</Link>
+			))}
 		</div>
 	);
 };

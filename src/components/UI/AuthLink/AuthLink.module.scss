@@ -1,6 +1,5 @@
 .container {
 	.auth {
-
 		display: grid;
 		gap: 20px;
 		grid-auto-flow: column;
@@ -8,9 +7,15 @@
 		.link {
 			cursor: pointer;
 		}
-	
+
+		.linkActive {
+			color: var(--linkColor);	
+		}
+
 		@media screen and (max-width: 640px) {
-			gap: 8px;
+			grid-auto-flow: row;
+			gap: 50px;
+			align-items: center;
 		}
 	}
 
@@ -19,6 +24,11 @@
 			display: none;
 		}
 	}
+
+	.linkActive {
+		color: var(--linkColor);	
+	}
+
 	.isBurger {
 		display: grid;
 	}

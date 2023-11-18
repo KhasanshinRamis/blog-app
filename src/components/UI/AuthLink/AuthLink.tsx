@@ -4,22 +4,27 @@ import Link from 'next/link';
 import { AuthLinkProps } from './AuthLink.props';
 import styles from './AuthLink.module.scss';
 import cn from 'classnames';
+import { useSession, signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 
 export const AuthLink = ({ isBurger, ...props }: AuthLinkProps): JSX.Element => {
 
-	const status = 'authenticated';
+	const pathname = usePathname();
+
+	const {status} = useSession();
 
 	return (
 		<div
 			className={styles.container}
 			{...props}
 		>
-			{status === 'notauthenticated'
+			{status === 'unauthenticated'
 				? (
 					<Link 	
 						href='/login' 
 						className={cn(styles.link, {
-							[styles.isBurger]: isBurger
+							[styles.isBurger]: isBurger,
+							[styles.linkActive]: pathname === '/login'
 						})}
 					>
 						Login
@@ -32,7 +37,8 @@ export const AuthLink = ({ isBurger, ...props }: AuthLinkProps): JSX.Element => 
 						<Link 
 							href='/write' 
 							className={cn(styles.link, {
-								[styles.isBurger]: isBurger
+								[styles.isBurger]: isBurger,
+								[styles.linkActive]: pathname === '/write'
 							})}
 						>
 							Write
@@ -41,6 +47,7 @@ export const AuthLink = ({ isBurger, ...props }: AuthLinkProps): JSX.Element => 
 							className={cn(styles.link, {
 								[styles.isBurger]: isBurger
 							})}
+							onClick={() => signOut()}
 						>	
 							Logout
 						</span>

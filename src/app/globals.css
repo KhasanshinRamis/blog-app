@@ -5,6 +5,7 @@
 	--softTextColor: #626262;
 	--btnPrimaryBg: #3e3939;
 	--btnPrimaryColor: #f1f1f1;
+	--linkColor: #0066cc;
 }
 
 * {
@@ -19,6 +20,9 @@ body {
   overflow-x: hidden;
 }
 
+body {
+	font-family: var(--titillium), sans-serif;
+}
 
 a {
   color: inherit;
@@ -32,6 +36,7 @@ a {
 	--softTextColor: #a6a6a6;
 	--btnPrimaryBg: #c0c0c0;
 	--btnPrimaryColor: #292732;
+	--linkColor: #66b2ff;
 }
 
 /* .light {
@@ -43,8 +48,6 @@ a {
   
 
 .wrapper{
-
-
 	background-color: var(--bg);
 	color: var(--textColor);
 	min-height: 100vh;
@@ -88,8 +91,8 @@ a {
 
 
 #footer {
-	grid-row-start: 3; /* Добавить */
-  	grid-row-end: 4; /* Добавить */
+	grid-row-start: 3; 
+  	grid-row-end: 4; 
 }
 
 .ql-container {

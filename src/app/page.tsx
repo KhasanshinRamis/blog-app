@@ -1,16 +1,16 @@
 import styles from './page.module.css';
 import { Feature, CategoryList, CardList, Menu, Container } from '@/components';
 
-export default function Home() {
 
-	// const [isOpened] = useMenuBurger((state) => [state.isOpened]);
-	
+export default function Home({ searchParams }) { 
+	const page = parseInt(searchParams.page) || 1;
+
 	return (
 		<Container>
 			<Feature />
 			<CategoryList />
 			<div className={styles.content}>
-				<CardList />
+				<CardList page={page}/>
 				<Menu />
 			</div>
 		</Container>

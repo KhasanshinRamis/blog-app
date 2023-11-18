@@ -1,44 +1,45 @@
+'use client';
+
 import { CategoryListProps } from './CategoryList.props';
 import styles from './CategoryList.module.scss';
+import { useEffect } from 'react';
+import { useCategories } from '@/store/useCategories';
 import Link from 'next/link';
 import Image from 'next/image';
 import cn from 'classnames';
+import { ICategory } from '@/interfaces/categories.interface';
 
-const categoryData = [
-	{title: 'style'},
-	{title: 'fashion'},
-	{title: 'food'},
-	{title: 'travel'},
-	{title: 'culture'},
-	{title: 'coding'},
-];
 
 export const CategoryList = ({ ...props }: CategoryListProps): JSX.Element => {
+
+	const [ categories, getAllCategories ] = useCategories(
+		(state) => [ state.categories, state.getAllCategories]
+	); 
+
+	useEffect(() => {
+		getAllCategories();
+	}, [getAllCategories()]);
+
 	return (
-		<div
-			className={styles.container}
-			{...props}
-		>
+		<div className={styles.container} {...props}>
 			<h1 className={styles.title}>Popular Categories</h1>
 			<div className={styles.categories}>
-
-				{categoryData.map((cat) => 
+				{categories && categories.map((category: ICategory) => (
 					<Link
-						key={cat.title}
-						href={`/blog?category=${cat.title}`}
-						className={cn(styles.category, styles[cat.title])}
+						key={category._id}
+						href={`/blog?category=${category.title}`}
+						className={cn(styles.category, styles[category.title])}
 					>
-						<Image
-							src={`/${cat.title}.png`}
-							alt={cat.title}
+						{category.img && <Image
+							src={`/${category.title}.png`}
+							alt={category.title}
 							width={32}
 							height={32}
 							className={styles.image}
-						/>
-						{cat.title}
+						/>}						
+						{category.title}
 					</Link>
-				)}
-
+				))}
 			</div>
 		</div>
 	);

@@ -1,12 +1,20 @@
+"use client";
+
 import { NavbarProps } from './Navbar.props';
 import styles from './Navbar.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AuthLink, ThemeToggle, ButtonIconMenu, MenuBurger } from '@/components';
+import { AuthLink } from '@/components/UI/AuthLink/AuthLink';
+import { ThemeToggle } from '@/components/UI/ThemeToggle/ThemeToggle';
+import { ButtonIconMenu } from '@/components/UI/ButtonIconMenu/ButtonIconMenu';
+import { MenuBurger} from '@/components/UI/MenuBurger/MenuBurger';
 import { closeMenuBurger } from '@/helpers/closeMenuBurger';
+import cn from 'classnames';
+import { usePathname } from 'next/navigation';
 
 export const Navbar = ({ ...props }: NavbarProps): JSX.Element => {
 
+	const pathname = usePathname();
 
 	return (
 		<nav
@@ -26,9 +34,19 @@ export const Navbar = ({ ...props }: NavbarProps): JSX.Element => {
 
 				<ThemeToggle/>	
 				
-				<Link href='/' className={styles.link}>Homepage</Link>
-				<Link href='/' className={styles.link}>Contact</Link>
-				<Link href='/' className={styles.link}>About</Link>
+				<Link href='/' className={cn(styles.link, {
+					[styles.linkActive]: pathname === '/?page=1'
+				})}>
+					Homepage
+				</Link>
+				<Link href='/contact' className={cn(styles.link, {
+					[styles.linkActive]: pathname === '/contact'
+				})}>
+					Contact
+				</Link>
+				<Link href='/about' className={cn(styles.link, {
+					[styles.linkActive]: pathname === '/about'
+				})}>About</Link>
 			
 				<AuthLink/>
 				
@@ -36,9 +54,31 @@ export const Navbar = ({ ...props }: NavbarProps): JSX.Element => {
 					<ButtonIconMenu/>
 
 					<MenuBurger>
-						<Link href='/' onClick={closeMenuBurger}>Homepage</Link>
-						<Link href='/' onClick={closeMenuBurger}>Contact</Link>
-						<Link href='/' onClick={closeMenuBurger}>About</Link>
+						<Link 
+							href='/' 
+							className={cn(styles.link, {
+								[styles.linkActive]: pathname === '/?page=1'
+							})} 
+							onClick={closeMenuBurger}
+						>
+							Homepage
+						</Link>
+						<Link 
+							href='/contact'
+							className={cn(styles.link, {
+								[styles.linkActive]: pathname === '/contact'
+							})}
+						>
+							Contact
+						</Link>
+						<Link 
+							href='/about' 
+							className={cn(styles.link, {
+								[styles.linkActive]: pathname === '/about'
+							})}
+						>
+							About
+						</Link>
 						<AuthLink isBurger={true} onClick={closeMenuBurger}/>
 					</MenuBurger>
 				</div>

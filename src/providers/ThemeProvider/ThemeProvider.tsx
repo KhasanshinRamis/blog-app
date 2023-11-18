@@ -1,9 +1,9 @@
 'use client';
 
 import { ThemeContex } from '@/context/ThemeContext/ThemeContex';
-import { useContext, useEffect, useState } from 'react';
+import { PropsWithChildren, useContext, useEffect, useState } from 'react';
 
-export const ThemeProvider = ({children}) => {
+export const ThemeProvider = ({children}: PropsWithChildren) => {
 	
 	const { theme } = useContext(ThemeContex);
 
