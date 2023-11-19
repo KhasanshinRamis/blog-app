@@ -10,7 +10,9 @@ import cn from 'classnames';
 import { ICategory } from '@/interfaces/categories.interface';
 
 
-export const CategoryList = ({ ...props }: CategoryListProps): JSX.Element => {
+export const revalidate = 60; 
+
+export const CategoryList = ({ ...props }: CategoryListProps): JSX.Element  => {
 
 	const [ categories, getAllCategories ] = useCategories(
 		(state) => [ state.categories, state.getAllCategories]
@@ -19,6 +21,8 @@ export const CategoryList = ({ ...props }: CategoryListProps): JSX.Element => {
 	useEffect(() => {
 		getAllCategories();
 	}, [getAllCategories()]);
+
+	// const { data } = useMemo<{ data: ICategory[] }>(() => ({ data: categories }), [categories]);
 
 	return (
 		<div className={styles.container} {...props}>
@@ -44,3 +48,4 @@ export const CategoryList = ({ ...props }: CategoryListProps): JSX.Element => {
 		</div>
 	);
 };
+

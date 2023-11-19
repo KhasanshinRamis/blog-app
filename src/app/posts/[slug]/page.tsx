@@ -1,45 +1,68 @@
+'use client';
+
 import { Comments, Container, Menu } from '@/components';
 import styles from './SinglePage.module.scss';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { usePosts } from '@/store/usePosts';
+import { IPost } from '@/interfaces/post.interface';
 
 
-export default function SinglePage() {
+export default function SinglePage({ params }: any) {
+	const { slug } = useParams();
+	
+	const [postItem, setPostItem] = useState<IPost | null>(null);
+
+	const [posts, getPostBySlug] = usePosts((state) => [state.posts, state.getPostBySlug]);
+
+	useEffect(() => {
+		getPostBySlug(slug);
+	}, [slug]);
+
+	useEffect(() => {
+	if (posts && slug) {
+		const post = posts.find((p: IPost, index: number) => index === +slug - 1);
+		if (post) {
+			setPostItem(post);
+		}
+	}
+  }, [posts, slug]);
+
 	return (
 		<Container className={styles.container}>
-			<div className={styles.infoContainer}>
-				<div className={styles.textContainer}>
-					<h1 className={styles.title}>Lorem ipsum dolor sit amet.</h1>
-					<div className={styles.user}>
-						<div className={styles.userImageContainer}>
-							<Image src='/p1.jpg' alt='' fill className={styles.avatar}/>
+			{posts && (
+				<div key={postItem?._id}>
+					<div className={styles.infoContainer}>
+						<div className={styles.textContainer}>
+							<h1 className={styles.title}>{postItem?.title}</h1>
+							<div className={styles.user}>
+								<div className={styles.userImageContainer}>
+									{postItem?.img && <Image src={postItem?.img} alt={postItem?.title} fill className={styles.avatar}/>}
+									{/* {postItem?.user.image && <Image src={postItem?.user.image} alt={postItem?.user.name} fill className={styles.avatar}/> */}
+								</div>
+								<div className={styles.userTextContainer}>
+									<span className={styles.username}>{postItem?.userEmail}</span>
+									{/* <span className={styles.username}>{postItem?.user.name}</span> */}
+									<span className={styles.date}>{postItem?.createdAt}</span>
+								</div>
+							</div>
 						</div>
-						<div className={styles.userTextContainer}>
-							<span className={styles.username}>John Doe</span>
-							<span className={styles.date}>01.01.2024</span>
+						<div className={styles.imageContainer}>
+							{postItem?.img && <Image src={postItem?.img} alt={postItem?.title} fill className={styles.image}/>}
 						</div>
 					</div>
-				</div>
-				<div className={styles.imageContainer}>
-					<Image src='/p1.jpg' alt='' fill className={styles.image}/>
-				</div>
-			</div>
-			<div className={styles.content}>
-				<div className={styles.post}>
-					<div className={styles.description}>
-						<p className={styles.text}>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia pariatur voluptates dolorum sunt ratione eum quo reprehenderit alias amet dolore dolorem ipsum error placeat, nostrum id sed ducimus molestias perferendis recusandae quis quam itaque. Quibusdam provident facere perferendis. Officiis quidem culpa rem distinctio quo? Dicta, libero. Pariatur quo rem blanditiis?	
-						</p>	
-						<h2>Lorem ipsum dolor sit amet.</h2>
-						<p className={styles.text}>
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias, harum nostrum odio maiores, aliquid tempore molestiae reprehenderit fuga accusamus laudantium quasi corrupti nesciunt. Placeat, doloremque. Quod magni necessitatibus omnis? Corporis, distinctio dolores! Natus, corporis? Harum voluptate, veritatis itaque quia nihil, facilis nulla minima, quae provident perferendis a. Recusandae fugiat dignissimos error maxime molestias quas quibusdam. Nulla odit unde necessitatibus libero dolorem amet atque, officia inventore reprehenderit tempore non obcaecati illo? Magnam cum nam maxime consequuntur? Ipsa quam blanditiis dolorum dolores.
-						</p>
-					</div>
-					<div className={styles.comment}>
-						<Comments/>
+					<div className={styles.content}>
+						<div className={styles.post}>
+							<div className={styles.description} dangerouslySetInnerHTML={{__html: postItem?.description}}/>
+							<div className={styles.comment}>
+								<Comments/>
+							</div>
+						</div>
+						<Menu/>
 					</div>
 				</div>
-				<Menu/>
-			</div>
+			)}
 		</Container>
 	);
 }

@@ -34,8 +34,8 @@ export const Navbar = ({ ...props }: NavbarProps): JSX.Element => {
 
 				<ThemeToggle/>	
 				
-				<Link href='/' className={cn(styles.link, {
-					[styles.linkActive]: pathname === '/?page=1'
+				<Link href='/?page=1' className={cn(styles.link, {
+					[styles.linkActive]: pathname === '/'
 				})}>
 					Homepage
 				</Link>

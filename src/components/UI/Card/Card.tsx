@@ -16,7 +16,7 @@ export const Card = ({ post, ...props }: CardProps): JSX.Element => {
 					<span className={styles.date}>{post.createdAt.substring(0, 10)} - </span>
 					<span className={styles.category}>{post.categorySlug.toUpperCase()}</span>
 				</div>
-				<Link href='/'>
+				<Link href={`/posts/${post.slug}`}>
 					<h1>{post.title}</h1>
 				</Link>
 				<p className={styles.description}>{post.description}</p>
