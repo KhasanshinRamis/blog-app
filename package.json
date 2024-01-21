@@ -25,6 +25,7 @@
     "sass": "^1.68.0",
     "swr": "^2.2.4",
     "typescript": "5.2.2",
+    "yarn": "^1.22.21",
     "zustand": "^4.4.2"
   },
   "devDependencies": {

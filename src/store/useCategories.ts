@@ -14,6 +14,6 @@ export const useCategories = create<ICategories>(set => ({
 	categories: [],
 	getAllCategories: async () => {
 		const response = await getAllCategories();
-		set({ categories: response.data });
+		set({ categories: response });
 	}
 }));

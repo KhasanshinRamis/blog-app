@@ -1,4 +1,5 @@
-import { Comment } from './comment.interface';
+import { IComment } from './comment.interface';
+import { IUser } from './user.interface';
 
 export interface IPost {
 	_id: string;
@@ -9,6 +10,7 @@ export interface IPost {
     img?: string;
     views: number;
     categorySlug: string;
-    userEmail: string
-	comments: Comment[];
+	userEmail: string;
+	user: IUser;
+	comments: IComment[];
 }
