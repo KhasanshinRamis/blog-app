@@ -75,8 +75,8 @@ model Post {
     views        Int       @default(0)
     categorySlug String
     category     Category  @relation(fields: [categorySlug], references: [slug])
-    userEmail    String
-    user         User      @relation(fields: [userEmail], references: [email])
+	userEmail    String
+  	user         User      @relation(fields: [userEmail], references: [email])
     comments     Comment[]
 }
 

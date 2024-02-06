@@ -20,7 +20,7 @@ export const Card = ({ post, ...props }: CardProps): JSX.Element => {
 					<h1>{post.title}</h1>
 				</Link>
 				<p className={styles.description}>{post.description}</p>
-				<Link href='/' className={styles.link}>Read More</Link>
+				<Link href={`/posts/${post.slug}`} className={styles.link}>Read More</Link>
 			</div>
 		</div>
 	);

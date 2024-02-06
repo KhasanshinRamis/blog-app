@@ -10,7 +10,6 @@ import cn from 'classnames';
 import { ICategory } from '@/interfaces/categories.interface';
 
 
-export const revalidate = 60;
 
 export const CategoryList = ({ ...props }: CategoryListProps): JSX.Element => {
 
@@ -22,7 +21,6 @@ export const CategoryList = ({ ...props }: CategoryListProps): JSX.Element => {
 		getAllCategories();
 	}, []);
 
-	// const { data } = useMemo<{ data: ICategory[] }>(() => ({ data: categories }), [categories]);
 
 	return (
 		<div className={styles.container} {...props}>

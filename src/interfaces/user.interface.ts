@@ -1,5 +1,4 @@
-import { IComment } from './comment.interface';
-import { IPost } from './post.interface';
+
 
 export interface IUser {
 	_id: string;
@@ -7,6 +6,4 @@ export interface IUser {
     email: string;
 	emailVerified: Date;
     image: string;
-	Post: IPost[];
-    Comment: IComment[];
 }

@@ -10,6 +10,9 @@ import { Container } from '@/components';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
+
+
+
 export default function WritePage() {
 
 	const { status } = useSession();
@@ -18,6 +21,7 @@ export default function WritePage() {
 
 	const [ isOpened, setIsOpened ] = useState<boolean>(false);
 	const [ value, setValue ] = useState<string>('');
+	const [ file, setFile ] = useState<FileList>();
 
 
 	if (status === 'loading') {
@@ -37,8 +41,17 @@ export default function WritePage() {
 				</button>
 				{isOpened && 
 					<div className={styles.add}>
+						<input 
+							type="file"
+							id='image' 
+							onChange={(event) => setFile(event.target.files[0])}
+							style={{display: 'none'}}
+						/>
+
 						<button className={cn(styles.button, styles.addButton)}>
-							<Image src='/image.png' alt='Добавить изображение' width={16} height={16} />
+							<label htmlFor="image">
+								<Image src='/image.png' alt='Добавить изображение' width={16} height={16} />
+							</label>
 						</button>
 
 						<button className={cn(styles.button, styles.addButton)}>

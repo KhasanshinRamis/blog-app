@@ -1,6 +1,7 @@
 'use client';
 
-import { Comments, Container, Menu } from '@/components';
+import { Container, Menu } from '@/components';
+import { Comments } from '@/components/widgets/Comments/Comments';
 import styles from './SinglePage.module.scss';
 import Image from 'next/image';
 import { useEffect } from 'react';
@@ -19,11 +20,11 @@ export default function SinglePage({ params }: any) {
 		getPosts(page, '');
 	}, [slug, posts]);
 
-	console.log(curSlug);
-	console.log(posts);
+
 	const post = posts[(curSlug % 4) - 1];
 
 	console.log(post);
+	
 
 	return (
 		<Container className={styles.container}>
@@ -51,7 +52,7 @@ export default function SinglePage({ params }: any) {
 					<div className={styles.post}>
 						<div className={styles.description} dangerouslySetInnerHTML={{ __html: post?.description }} />
 						<div className={styles.comment}>
-							<Comments />
+							<Comments postSlug={curSlug}/>
 						</div>
 					</div>
 					<Menu />

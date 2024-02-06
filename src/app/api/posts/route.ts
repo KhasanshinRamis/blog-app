@@ -1,4 +1,6 @@
+import { getAuthSession } from '@/utils/auth';
 import prisma from '@/utils/connect';
+import { error } from 'console';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Get all posts
@@ -26,5 +28,24 @@ export const GET = async (req: NextRequest) => {
 		return NextResponse.json({posts, count}, { status: 200 });
 	} catch (error: any) {
 		return NextResponse.json({ error: error.message }, { status: 500 });
+	}
+};
+
+export const POST = async (req: NextRequest) =>{
+	const session = getAuthSession();
+
+	if (!session) {
+		return NextResponse.json({message: 'Not authenticated!'}, {status: 401});
+	}
+
+	try {
+		const body = await req.json();
+		const post = await prisma.post.create({
+			data: {...body, userEmail: session.user.email}, 
+		});
+
+		return NextResponse.json({post}, {status: 200});
+	} catch (error: any) {
+		return NextResponse.json({ error: error.message }, {status: 500});
 	}
 };

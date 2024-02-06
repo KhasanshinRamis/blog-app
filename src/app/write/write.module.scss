@@ -42,9 +42,12 @@
 			width: 100%;
 			left: 50px;
 			z-index: 1;
-
+			cursor: pointer;
 			.addButton {
 				border-color: #1a8917;
+				label {
+					height: 16px;
+				}
 			}
 		}
 
