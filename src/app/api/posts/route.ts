@@ -31,21 +31,20 @@ export const GET = async (req: NextRequest) => {
 	}
 };
 
-export const POST = async (req: NextRequest) =>{
-	const session = getAuthSession();
-
+export const POST = async (req: NextRequest) => {
+	const session = await getAuthSession();
+  
 	if (!session) {
-		return NextResponse.json({message: 'Not authenticated!'}, {status: 401});
+		return NextResponse.json({ message: "Not Authenticated!" }, { status: 401 });
 	}
-
+  
 	try {
 		const body = await req.json();
 		const post = await prisma.post.create({
-			data: {...body, userEmail: session.user.email}, 
+			data: { ...body, userEmail: session.user.email },
 		});
-
-		return NextResponse.json({post}, {status: 200});
+		return NextResponse.json(post, { status: 200 });
 	} catch (error: any) {
-		return NextResponse.json({ error: error.message }, {status: 500});
+		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
-};
+  };
