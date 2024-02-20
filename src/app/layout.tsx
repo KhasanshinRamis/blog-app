@@ -5,6 +5,7 @@ import { Titillium_Web } from 'next/font/google';
 import { ThemeContextProvider } from '@/context/ThemeContext/ThemeContex';
 import { ThemeProvider } from '@/providers/ThemeProvider/ThemeProvider';
 import { AuthProvider } from '@/providers/AuthProvider/AuthProvider';
+import { TanstackProvider } from '@/providers/TanstackProvider/TanstackProvider';
 
 
 const titillium = Titillium_Web({
@@ -23,19 +24,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<body className={titillium.variable}>
-				<AuthProvider>
-					<ThemeContextProvider>
-						<ThemeProvider>	
-							<div className='wrapper'>
-								<div className='container'>
-									<Navbar id='navbar'/>
-									<main id='body'>{children}</main>
-									<Footer id='footer'/>
-								</div>
-							</div>
-						</ThemeProvider>
-					</ThemeContextProvider>
-				</AuthProvider>
+					<AuthProvider>
+						<ThemeContextProvider>
+							<ThemeProvider>	
+								<TanstackProvider>
+									<div className='wrapper'>
+										<div className='container'>
+											<Navbar id='navbar'/>
+											<main id='body'>{children}</main>
+											<Footer id='footer'/>
+										</div>
+									</div>
+								</TanstackProvider>
+							</ThemeProvider>
+						</ThemeContextProvider>
+					</AuthProvider>
 			</body>
 
 		</html>

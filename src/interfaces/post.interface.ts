@@ -2,6 +2,8 @@ import { IComment } from './comment.interface';
 import { IUser } from './user.interface';
 
 export interface IPost {
+	posts: any;
+	count: any;
 	_id: string;
     createdAt: string;
     slug: string;

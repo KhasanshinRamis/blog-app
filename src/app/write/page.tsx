@@ -14,8 +14,12 @@ import {
 	ref,
 	uploadBytesResumable,
 	getDownloadURL,
-  } from "firebase/storage";
+} from "firebase/storage";
 import { app } from '@/utils/firebase';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import postService from '@/services/post.service';
+import { IPost } from '@/interfaces/post.interface';
 
 
 
@@ -24,14 +28,26 @@ export default function WritePage() {
 
 	const { status } = useSession();
 	const router = useRouter();
+	const queryClient = useQueryClient();
 
 
-	const [ isOpened, setIsOpened ] = useState<boolean>(false);
-	const [ value, setValue ] = useState<string>('');
-	const [ file, setFile ] = useState(null);
-	const [ media, setMedia ] = useState("");
-	const [ title, setTitle ] = useState("");
+	const [isOpened, setIsOpened] = useState<boolean>(false);
+	const [value, setValue] = useState<string>('');
+	const [file, setFile] = useState(null);
+	const [media, setMedia] = useState("");
+	const [title, setTitle] = useState("");
+	const [categorySlug, setCategorySlug] = useState('');
 
+	const mutation = useMutation({
+		mutationFn: (newPost) => postService.post(newPost),
+		onError: (error) => {
+			console.log('Error: ', error.message);
+		},
+		onSuccess: (data) => {
+			console.log('Success!', data);
+			queryClient.invalidateQueries({ queryKey: ['post'] });
+		}
+	});
 
 	useEffect(() => {
 		const storage = getStorage(app);
@@ -42,26 +58,26 @@ export default function WritePage() {
 			const uploadTask = uploadBytesResumable(storageRef, file);
 
 			uploadTask.on(
-			"state_changed",
-			(snapshot) => {
-				const progress =
-				(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-				console.log("Upload is " + progress + "% done");
-				switch (snapshot.state) {
-				case "paused":
-					console.log("Upload is paused");
-					break;
-				case "running":
-					console.log("Upload is running");
-					break;
+				"state_changed",
+				(snapshot) => {
+					const progress =
+						(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					console.log("Upload is " + progress + "% done");
+					switch (snapshot.state) {
+						case "paused":
+							console.log("Upload is paused");
+							break;
+						case "running":
+							console.log("Upload is running");
+							break;
+					}
+				},
+				(error) => { },
+				() => {
+					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+						setMedia(downloadURL);
+					});
 				}
-			},
-			(error) => {},
-			() => {
-				getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-				setMedia(downloadURL);
-				});
-			}
 			);
 		};
 
@@ -69,43 +85,50 @@ export default function WritePage() {
 	}, [file]);
 
 	if (status === 'loading') {
-		return <div className={styles.loading}>Loading...</div>;	
+		return <div className={styles.loading}>Loading...</div>;
 	} else if (status === 'unauthenticated') {
 		router.push('/');
-	}	
+	}
 
 	const slugify = (str: string) => str.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
 
 	console.log(media);
 
 	const handleSubmit = async () => {
-		const res = await fetch("/api/posts", {
-			method: "POST",
-			body: JSON.stringify({
-				title,
-				description: value,
-				img: media,
-				slug: slugify(title),
-				categorySlug: 'style',
-			})
+		mutation.mutate({
+			title,
+			description: value,
+			img: media,
+			slug: slugify(title),
+			categorySlug: categorySlug || 'style',
+		}, {
+			mutationKey: "createPost",
 		});
-		console.log(res);
 	};
-	
+
 	return (
 		<Container className={styles.container}>
-			<input type="text" placeholder='Заголовок' className={styles.input} onChange={(event) => setTitle(event.target.value)}/>
+			<input type="text" placeholder='Заголовок' className={styles.input} onChange={(event) => setTitle(event.target.value)} />
+			<select className={styles.select} onChange={(event) => setCategorySlug(event.target.value)}>
+				<option value="style">style</option>
+				<option value="fashion">fashion</option>
+				<option value="food">food</option>
+				<option value="culture">culture</option>
+				<option value="travel">travel</option>
+				<option value="coding">coding</option>
+			</select>
+
 			<div className={styles.editor}>
 				<button className={styles.button}>
-					<Image src='/plus.png' alt='Добавить материал' width={16} height={16} onClick={() => setIsOpened(!isOpened)}/>
+					<Image src='/plus.png' alt='Добавить материал' width={16} height={16} onClick={() => setIsOpened(!isOpened)} />
 				</button>
-				{isOpened && 
+				{isOpened &&
 					<div className={styles.add}>
-						<input 
+						<input
 							type="file"
-							id='image' 
+							id='image'
 							onChange={(event) => setFile(event.target.files[0])}
-							// style={{display: 'none'}}
+							style={{ display: 'none' }}
 						/>
 
 						<button className={cn(styles.button, styles.addButton)}>
@@ -117,16 +140,16 @@ export default function WritePage() {
 						<button className={cn(styles.button, styles.addButton)}>
 							<Image src='/external.png' alt='Добавить ресурс' width={16} height={16} />
 						</button>
-						
+
 						<button className={cn(styles.button, styles.addButton)}>
 							<Image src='/video.png' alt='Добавить видео' width={16} height={16} />
 						</button>
 					</div>
 				}
-				<ReactQuill 
-					theme='bubble' 
-					value={value} 
-					onChange={setValue} 
+				<ReactQuill
+					theme='bubble'
+					value={value}
+					onChange={setValue}
 					placeholder='Расскажи свою историю...'
 					className={styles.textArea}
 				/>

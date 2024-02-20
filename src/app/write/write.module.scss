@@ -1,7 +1,8 @@
 .container {
+	display: grid;
 
 	.input {
-		padding: 50px;
+		padding: 25px;
 		font-size: 64px;
 		border: none;
 		outline: transparent;
@@ -12,6 +13,14 @@
 			color: #b3b3b1;
 		}
 	}
+
+	.select{
+		margin-bottom: 25px;
+		padding: 10px 20px;
+		margin-left: 50px;
+		width: max-content;
+		height: calc(max-content * 2/3);
+	  }
 
 	.editor {
 		display: flex;
